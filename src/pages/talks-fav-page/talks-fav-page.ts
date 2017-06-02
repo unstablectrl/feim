@@ -3,14 +3,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-talk-page',
-  templateUrl: 'talk-page.html',
+  selector: 'page-talks-fav-page',
+  templateUrl: 'talks-fav-page.html',
 })
-export class TalkPage {
-  talk: object;
+export class TalksFavPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.talk = navParams.get('data');
   }
 
   ionViewDidLoad() {}
