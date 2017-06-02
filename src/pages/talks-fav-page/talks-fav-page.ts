@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { FirebaseService } from './../../providers/firebase-service';
 
@@ -11,7 +11,7 @@ import { FirebaseService } from './../../providers/firebase-service';
 export class TalksFavPage {
   talks;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService, public toastCtrl: ToastController) {
     this.firebaseService.authState.subscribe(user => {
       if (user) {
         this.talks = this.firebaseService.readStaredTalks();
@@ -25,8 +25,14 @@ export class TalksFavPage {
     this.navCtrl.push('TalkFavPage', {data: talk});
   }
 
-  removeTalkFav(talkKey) {
-    console.log(talkKey)
+  removeTalkFav(staredKey) {
+    this.firebaseService.removeStared(staredKey);
+    let toast = this.toastCtrl.create({
+      message: 'Talk was added successfully',
+      duration: 2000,
+      showCloseButton: true
+    });
+    toast.present();
   }
 
 }

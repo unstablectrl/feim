@@ -22,7 +22,7 @@ export class FirebaseService {
         orderByChild: 'start'
       }
     }).map(talks => {
-      console.log(talks)
+      // console.log(talks)
       return talks.map(oneTalk => {
         oneTalk.theme = this.afd.object('/themes/' + oneTalk.theme);
         for (var i = 0; i < oneTalk.authors.length; i++)
@@ -32,7 +32,7 @@ export class FirebaseService {
       });
     });
   }
-  
+
   readTalk(key) {
     return this.afd.object('/talks/' + key).map(oneTalk => {
         oneTalk.theme = this.afd.object('/themes/' + oneTalk.theme);
@@ -44,15 +44,82 @@ export class FirebaseService {
   }
 
   readStaredTalks() {
-    return this.afd.list('/users/' + this.user.uid + '/stared').map(staredTalks => {
+    return this.afd.list('/users/' + this.user.uid + '/stared', {
+      query: {
+        orderByChild: 'start'
+      }
+    }).map(staredTalks => {
       for (var i = 0; i < staredTalks.length; i++)
-        staredTalks[i].stared = this.readTalk(staredTalks[i].$value);
+        staredTalks[i].stared = this.readTalk(staredTalks[i].talkKey);
       return staredTalks;
     });
   }
 
-  updateStared(talkKey) {
-    this.afd.list('/users/' + this.user.uid + '/stared').push(talkKey);
+  updateStared(talkKey, talkStart) {
+    this.afd.list('/users/' + this.user.uid + '/stared').push({
+      'talkKey': talkKey,
+      start: talkStart
+    });
+    // this.afd.list('/users/' + this.user.uid + '/stared', { preserveSnapshot: true }).subscribe(snapshots => {
+    //   snapshots.forEach(snapshot => {
+    //     // console.log(snapshot.key)
+    //     console.log(snapshot.val().talkKey)
+    //   });
+    // })
+    // console.log(talkKey, talkStart)
+
+    // let a = this.afd.list('/users/' + this.user.uid + '/stared').$ref.once('value', snap => {
+    //   console.log(snap)
+    //   console.log(snap.val())
+    //   console.log(snap.child('talkKey'))
+    // })
+    // console.log(a)
+    // , {
+    //   query: {
+    //     orderByChild: 'talkKey',
+    //     equalTo: talkKey
+    //   }
+    //   ,
+    //   preserveSnapshot: true
+  // }
+  // ).$ref.equalTo(talkKey)
+  //   .subscribe(snapshots => {
+  //     console.log(snapshots)
+  //     snapshots.forEach(snapshot => {
+  //       console.log(snapshot.key)
+  //       console.log(snapshot.val())
+  //     });
+  // })
+    // .map(staredTalk => {
+    //   console.log(staredTalk)
+    // })
+    // .$ref.on('child_added', snapshot => {
+    //   console.log(snapshot)
+    //   console.log(snapshot.val())
+    //   for (var i = 0; i < snapshot.val().length; i++)
+    //     console.log(snapshot.val()[i])
+      // if (snapshot.val())
+      //   console.log('remove')
+      // else
+      //   console.log('add')
+      // if (snapshots.length == 0){
+      //   console.log('add')
+        // this.afd.list('/users/' + this.user.uid + '/stared').push({
+        //   'talkKey': talkKey,
+        //   start: talkStart
+        // });
+      // } else {
+      //   snapshots.forEach(snapshot => {
+      //   console.log('remove')
+      //   this.afd.object('/users/' + this.user.uid + '/stared/' + snapshot.key).remove();
+      // });
+      // }
+    // })
+  }
+
+  removeStared(staredKey) {
+    console.log('/users/'+this.user.uid+'/stared/'+staredKey)
+    this.afd.object('/users/'+this.user.uid+'/stared/'+staredKey).remove()
   }
 
 }

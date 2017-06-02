@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <div *ngFor="let talk of talks | async">
-    <ion-card class="talk-card" (click)="showTalk(talk)">
+    <ion-card class="talk-card">
       <ion-row class="theme-tag" [ngStyle]="{'background-color': ((talk.stared | async)?.theme | async)?.color}"></ion-row>
       <ion-card-header text-center text-uppercase>{{(talk.stared | async)?.title}}</ion-card-header>
       <ion-list>
@@ -26,13 +26,13 @@
           <span *ngFor="let tag of (talk.stared | async)?.tags">#{{tag}} </span>
         </ion-item>
         <ion-item>
-          <button ion-button icon-left item-rigth small color="light">
+          <button ion-button icon-left item-rigth small color="light" (click)="showTalk(talk)">
             <!--<ion-icon name="text"></ion-icon>-->
             <div>details</div>
           </button>
           <button ion-button icon-left clear item-right color="dark" (click)="removeTalkFav(talk.$key)">
             <ion-icon name="star-outline"></ion-icon>
-            Star
+            Remove
           </button>
         </ion-item>
       </ion-list>
