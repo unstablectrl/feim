@@ -1,12 +1,41 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>TalksFavPage</ion-title>
+    <ion-title>Stared</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <div *ngFor="let talk of talks | async">
+    <ion-card class="talk-card" (click)="showTalk(talk)">
+      <ion-row class="theme-tag" [ngStyle]="{'background-color': ((talk.stared | async)?.theme | async)?.color}"></ion-row>
+      <ion-card-header text-center text-uppercase>{{(talk.stared | async)?.title}}</ion-card-header>
+      <ion-list>
+        <ion-item>
+          <ion-icon name="people" item-left small></ion-icon>
+          <span *ngFor="let author of (talk.stared | async)?.authors; let i=index">{{(author | async)?.name}}<span *ngIf="i != (talk.stared | async)?.authors.length-1">,</span> </span>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="time" item-left small></ion-icon>
+          {{(talk.stared | async)?.start | date:'MMM, d - ' }}{{(talk.stared | async)?.start | date:'jm' }}
+        </ion-item><hr class="style">
+        <ion-item>
+          <ion-icon name="pricetag" item-left small></ion-icon>
+          <span *ngFor="let tag of (talk.stared | async)?.tags">#{{tag}} </span>
+        </ion-item>
+        <ion-item>
+          <button ion-button icon-left item-rigth small color="light">
+            <!--<ion-icon name="text"></ion-icon>-->
+            <div>details</div>
+          </button>
+          <button ion-button icon-left clear item-right color="dark" (click)="removeTalkFav(talk.$key)">
+            <ion-icon name="star-outline"></ion-icon>
+            Star
+          </button>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
 </ion-content>

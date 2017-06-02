@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { Storage } from '@ionic/storage';
+
 import { FirebaseService } from './../../providers/firebase-service';
 import { Observable } from 'rxjs/Observable';
 
@@ -13,8 +15,9 @@ export class TalksPage {
 
   talks: Observable<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseService) {
-    this.talks = this.firebaseService.readTalks();
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public firebaseService: FirebaseService) {
+    this.talks = this.firebaseService.readTalks()
+    // console.log(this.talks)
   }
 
   ionViewDidLoad() {}
@@ -23,6 +26,7 @@ export class TalksPage {
     this.navCtrl.push('TalkPage', {data: talk});
   }
   
-  addTalkFav(talkKey) {}
-
+  addTalkFav(talkKey) {
+    this.firebaseService.updateStared(talkKey);
+  }
 }

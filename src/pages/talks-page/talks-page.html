@@ -26,7 +26,11 @@
           <span *ngFor="let tag of talk?.tags">#{{tag}} </span>
         </ion-item>
         <ion-item>
-          <button ion-button icon-left clear item-right (click)="addTalkFav(talk.$key)">
+          <button ion-button icon-left item-rigth small color="light">
+            <!--<ion-icon name="text"></ion-icon>-->
+            <div>details</div>
+          </button>
+          <button ion-button icon-left clear item-right color="dark" (click)="addTalkFav(talk.$key)">
             <ion-icon name="star-outline"></ion-icon>
             Star
           </button>
