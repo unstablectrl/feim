@@ -24,9 +24,11 @@ export class FirebaseService {
     }).map(talks => {
       // console.log(talks)
       return talks.map(oneTalk => {
-        oneTalk.theme = this.afd.object('/themes/' + oneTalk.theme);
+        console.log(oneTalk)
+        oneTalk.themeobs = this.afd.object('/themes/' + oneTalk.theme);
+        oneTalk.authorsobs = []
         for (var i = 0; i < oneTalk.authors.length; i++)
-          oneTalk.authors[i] = this.afd.object('/people/' + oneTalk.authors[i]);
+          oneTalk.authorsobs.push(this.afd.object('/people/' + oneTalk.authors[i]));
         // console.log(oneTalk)
         return oneTalk;
       });

@@ -17,11 +17,13 @@ export class TalksPage {
   something: Observable<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public firebaseService: FirebaseService, public toastCtrl: ToastController) {
-    this.talks = this.firebaseService.readTalks()
+    // this.talks = this.firebaseService.readTalks()
     // console.log(this.talks)
   }
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() {
+    this.talks = this.firebaseService.readTalks()
+  }
 
   showTalk(talk) {
     this.navCtrl.push('TalkPage', {data: talk});

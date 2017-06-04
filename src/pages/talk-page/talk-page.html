@@ -27,7 +27,7 @@
 
   <ion-list>
     <ion-list-header>Authors</ion-list-header>
-    <ion-item *ngFor="let author of talk.authors">{{(author | async)?.name}}</ion-item>
+    <ion-item *ngFor="let author of talk.authorsobs">{{(author | async)?.name}}</ion-item>
   </ion-list>
 
   <ion-list>
@@ -42,7 +42,7 @@
 
   <ion-list>
     <ion-list-header>Theme</ion-list-header>
-    <ion-item>{{(talk?.theme | async)?.name}}</ion-item>
+    <ion-item>{{(talk?.themeobs | async)?.name}}</ion-item>
   </ion-list>
 
 </ion-content>

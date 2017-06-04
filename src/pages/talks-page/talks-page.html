@@ -10,12 +10,12 @@
 <ion-content padding>
   <div *ngFor="let talk of talks | async">
     <ion-card class="talk-card">
-      <ion-row class="theme-tag" [ngStyle]="{'background-color': (talk.theme | async)?.color}"></ion-row>
+      <ion-row class="theme-tag" [ngStyle]="{'background-color': (talk.themeobs | async)?.color}"></ion-row>
       <ion-card-header text-center text-uppercase>{{talk?.title}}</ion-card-header>
       <ion-list>
         <ion-item>
           <ion-icon name="people" item-left small></ion-icon>
-          <span *ngFor="let author of talk.authors; let i=index">{{(author | async)?.name}}<span *ngIf="i != talk.authors.length-1">,</span> </span>
+          <span *ngFor="let author of talk.authorsobs; let i=index">{{(author | async)?.name}}<span *ngIf="i != talk.authorsobs.length-1">,</span> </span>
         </ion-item>
         <ion-item>
           <ion-icon name="time" item-left small></ion-icon>
